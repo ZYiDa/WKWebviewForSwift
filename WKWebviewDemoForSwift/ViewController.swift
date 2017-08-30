@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 
     @IBAction func gotoWebView(_ sender: Any) {
         let wkWebviewController:WKWebviewController = WKWebviewController()
-        wkWebviewController.urlString = "http://www.qq.com"
+        wkWebviewController.urlString = "http://www.jd.com"
         self.navigationController?.pushViewController(wkWebviewController, animated: true)
     }
     override func didReceiveMemoryWarning() {
