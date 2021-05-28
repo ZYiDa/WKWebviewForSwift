@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 //MARK: 是否为刘海屏系列
-public var iPhoneXSerial:Bool{
+public var iPhoneXSerialKey:Bool{
     if #available(iOS 11.0, *) {
         let bottom:CGFloat = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         return bottom > 0
@@ -18,19 +18,19 @@ public var iPhoneXSerial:Bool{
 }
 
 //MARK: -  status_bar
-public let StatusBarHeight:CGFloat = iPhoneXSerial ? 44 : 20
+public let WKWebviewControllerStatusBarHeight:CGFloat = iPhoneXSerialKey ? 44 : 20
 //MARK: -  TopHeight
-public let TopHeight:CGFloat = StatusBarHeight+44
+public let WKWebviewControllerTopHeight:CGFloat = WKWebviewControllerStatusBarHeight+44
 //MARK: -  BottomHeight
-public let BottomHeight:CGFloat = iPhoneXSerial ? 83 : 49
+public let WKWebviewControllerBottomHeight:CGFloat = iPhoneXSerialKey ? 83 : 49
 //MARK: -  BottomSafeEdge
-public let BottomSafeEdge:CGFloat = iPhoneXSerial ? 37:0
+public let WKWebviewControllerBottomSafeEdge:CGFloat = iPhoneXSerialKey ? 37:0
 //MARK: -  ScreenWidth
-public let ScreenWidth:CGFloat = UIScreen.main.bounds.size.width
+public let WKWebviewControllerScreenWidth:CGFloat = UIScreen.main.bounds.size.width
 //MARK: -  ScreenHeight
-public let ScreenHeight:CGFloat = UIScreen.main.bounds.size.height
+public let WKWebviewControllerScreenHeight:CGFloat = UIScreen.main.bounds.size.height
 
-class WKWebviewController: UIViewController,WKUIDelegate,WKNavigationDelegate{
+class WKWebviewController: UIViewController{
     
     enum URLType {
         /// 在线
@@ -68,7 +68,7 @@ class WKWebviewController: UIViewController,WKUIDelegate,WKNavigationDelegate{
     
     //MARK: - WKWebView对象
     fileprivate lazy var wkWebview: WKWebView = {
-        let tempWebView = WKWebView.init(frame: CGRect(origin: CGPoint(x: 0, y: TopHeight), size: self.view.frame.size))
+        let tempWebView = WKWebView.init(frame: CGRect(origin: CGPoint(x: 0, y: WKWebviewControllerTopHeight), size: self.view.frame.size))
         tempWebView.uiDelegate = self
         tempWebView.navigationDelegate = self
         tempWebView.backgroundColor = UIColor.white
@@ -82,7 +82,7 @@ class WKWebviewController: UIViewController,WKUIDelegate,WKNavigationDelegate{
 
     //MARK: - UIProgressView进度条对象
     fileprivate lazy var progress: UIProgressView = {
-        let rect:CGRect = CGRect.init(x: 0, y: TopHeight + 1, width: ScreenWidth, height: 2.0)
+        let rect:CGRect = CGRect.init(x: 0, y: WKWebviewControllerTopHeight + 1, width: WKWebviewControllerScreenWidth, height: 2.0)
         let tempProgressView = UIProgressView.init(frame: rect)
         tempProgressView.tintColor = UIColor.red
         tempProgressView.backgroundColor = UIColor.gray
@@ -202,4 +202,9 @@ extension WKWebviewController{
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
+}
+
+//MARK: - WKUIDelegate && WKNavigationDelegate
+extension WKWebviewController:WKUIDelegate,WKNavigationDelegate{
+    
 }
